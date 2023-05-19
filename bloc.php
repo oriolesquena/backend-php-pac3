@@ -28,9 +28,8 @@
     } else {
         $lang = 'ca'; // Idioma per defecte
     }
-    $order = 'DESC';
-    $sortByTitle = false;
-    $sortByDate = true;
+    $order = 'desc';
+    $sort = 'date';
     $arrayPosts = array();
 
     $jsonMenu = file_get_contents('./menu.json');
@@ -51,6 +50,41 @@
         </ul>
     </nav>
     <main>
+
+        <div class="order">
+            <?php if ($lang == 'ca') {
+                ?>
+                <h5>Ordernar per: <a href="?sort=date">Data</a> | <a href="?sort=title">Títols</a></h5>
+                <h5>Tipus d'ordre: <a href="?order=asc">Ascendent</a> | <a href="?order=desc">Descendent</a></h5>
+                <?php
+            } else if ($lang == 'en') {
+                ?>
+                <h5>Order by: <a href="?sort=date">Date</a> | <a href="?sort=title">Titles</a></h5>
+                <h5>Type of order: <a href="?order=asc">Ascending</a> | <a href="?order=desc">Descending</a></h5>
+                <?php
+            }
+            ?>
+        </div>
+        <?php 
+        if (isset($_GET["sort"])) {
+            $sort = $_GET["sort"];
+            $_SESSION["sort"] = $sort;
+        } else if (isset($_SESSION["sort"])) {
+            $sort = $_SESSION["sort"];
+        } else {
+            $sort = 'date'; // Ordenar per data per defecte
+        }
+
+        if (isset($_GET["order"])) {
+            $order = $_GET["order"];
+            $_SESSION["order"] = $order;
+        } else if (isset($_SESSION["order"])) {
+            $order = $_SESSION["order"];
+        } else {
+            $order = 'desc'; // Idioma per defecte
+        }
+        ?>
+
         <?php
 
         function truncateWords($input, $numwords, $padding="") {
@@ -91,13 +125,13 @@
             }
         }
 
-        if ($sortByTitle) {
+        if ($sort == 'title') {
             usort($arrayPosts, cmp_titles($lang));
-        } else if ($sortByDate) {
+        } else if ($sort == 'date') {
             usort($arrayPosts, "cmp_dates");
         }
 
-        if ($order == 'DESC') {
+        if ($order == 'desc') {
             $arrayPosts = array_reverse($arrayPosts);
         }
 
