@@ -16,6 +16,7 @@
 <body>
 
   <?php 
+  session_start(); // Necessari per poder utilitzar la funció isset() més avall
 
   if (isset($_GET["id"])) {
     $id = $_GET["id"];

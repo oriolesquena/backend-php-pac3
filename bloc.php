@@ -23,11 +23,11 @@
     if (isset($_GET["lang"])) {
         $lang = $_GET["lang"];
         $_SESSION["lang"] = $lang;
-        } else if (isset($_SESSION["lang"])) {
+    } else if (isset($_SESSION["lang"])) {
         $lang = $_SESSION["lang"];
-        } else {
+    } else {
         $lang = 'ca'; // Idioma per defecte
-        }
+    }
     $order = 'DESC';
     $sortByTitle = false;
     $sortByDate = true;
@@ -83,8 +83,10 @@
             /* S'afegeix el següent 'if' ja que sinó la funció scandir retorna 
             també '.' i '..' que són el mateix directori i el directori pare */
             if (substr($file, 0, 1) != '.') {
+                $id = $id + 1;
                 $jsonData = file_get_contents('./posts/' . $file);
                 $data = json_decode($jsonData);
+                $data->id = $id;
                 $arrayPosts[] = $data;
             }
         }
@@ -100,8 +102,8 @@
         }
 
         foreach($arrayPosts as $array) {
-            $id = $id + 1;
-            $link = 'post.php?id=' . $id . '&lang=' . $lang;
+            
+            $link = 'post.php?id=' . $array->id . '&lang=' . $lang;
             ?>
             <ul>
                 <li class="post-home">
