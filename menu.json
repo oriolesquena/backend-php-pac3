@@ -1,0 +1,26 @@
+{
+    "home": {
+        "ca": "Inici",
+        "en": "Home"
+    },
+    "act1": {
+        "ca": "Activitat 1",
+        "en": "Activity 1"
+    },
+    "api": {
+        "ca": "API",
+        "en": "API"
+    },
+    "login": {
+        "ca": "Entra",
+        "en": "Log in"
+    },
+    "profile": {
+        "ca": "Perfil",
+        "en": "Profile"
+    },
+    "logout": {
+        "ca": "Tanca la sessió",
+        "en": "Log out"
+    }
+}

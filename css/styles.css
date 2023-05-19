@@ -10,14 +10,43 @@ body {
     margin: auto;
   }
 
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+
+  /*
+  .primary-menu > li:not(:last-child)::after {
+    content: " ·\00a0";
+  } */
+
   h1 {
     line-height: 2.5rem;
   }
 
   li {
     list-style-type: none;
+  }
+
+  .post-home {
     margin-top: 2.5rem;
     margin-bottom: 2.5rem;
+  }
+
+  .primary-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+    text-transform: uppercase;
+  }
+
+  .lang-selector {
+    margin: auto;
+    margin-left: 1rem;
+    margin-right: 0;
   }
 
   .language {
@@ -42,12 +71,9 @@ body {
     width: 100%;
   }
 
-  .lnag-selector {
-    padding-left: 40px;
-  }
-
   .flag {
-    height: 2rem;
+    height: 1rem;
+    margin: auto;
   }
 
   hr:last-of-type {

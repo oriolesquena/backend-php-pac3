@@ -14,23 +14,44 @@
     <title>Consciència Ambiental</title>
   </head>
 <body>
-    <div>
-        <ul>
-            <li class="language">Selector d'idioma</li>
+    <?php 
+    session_start(); // Necessari per poder utilitzar la funció isset() més avall
+
+    // Declarar variables
+    $id = 0;
+    $numwords = 120;
+    if (isset($_GET["lang"])) {
+        $lang = $_GET["lang"];
+        $_SESSION["lang"] = $lang;
+        } else if (isset($_SESSION["lang"])) {
+        $lang = $_SESSION["lang"];
+        } else {
+        $lang = 'ca'; // Idioma per defecte
+        }
+    $order = 'DESC';
+    $sortByTitle = false;
+    $sortByDate = true;
+    $arrayPosts = array();
+
+    $jsonMenu = file_get_contents('./menu.json');
+    $menu = json_decode($jsonMenu);
+    ?>
+    <nav>
+        <ul class="primary-menu">
+            <li><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></li>
+            <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
+            <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
+            <li><a href=""><?php print_r($menu->login->$lang);?></a></li>
+            <li><a href=""><?php print_r($menu->profile->$lang);?></a></li>
+            <li><a href=""><?php print_r($menu->logout->$lang);?></a></li>
+        </ul>
+        <ul class="lang-selector">
             <li class="language"><a href="?lang=ca"><img class="flag" src="./img/ca.png" alt="Català"></a></li>
             <li class="language"><a href="?lang=en"><img class="flag" src="./img/en.png" alt="Anglès"></a></li>
         </ul>
-    </div>
+    </nav>
     <main>
         <?php
-
-        $id = 0;
-        $numwords = 120;
-        $lang = $_GET["lang"];;
-        $order = 'DESC';
-        $sortByTitle = false;
-        $sortByDate = true;
-        $arrayPosts = array();
 
         function truncateWords($input, $numwords, $padding="") {
             $output = strtok($input, " \n");
@@ -62,9 +83,6 @@
             /* S'afegeix el següent 'if' ja que sinó la funció scandir retorna 
             també '.' i '..' que són el mateix directori i el directori pare */
             if (substr($file, 0, 1) != '.') {
-
-                $id = $id + 1;
-                $link = 'post.php?id=' . $id;
                 $jsonData = file_get_contents('./posts/' . $file);
                 $data = json_decode($jsonData);
                 $arrayPosts[] = $data;
@@ -83,10 +101,10 @@
 
         foreach($arrayPosts as $array) {
             $id = $id + 1;
-            $link = 'post.php?id=' . $id;
+            $link = 'post.php?id=' . $id . '&lang=' . $lang;
             ?>
             <ul>
-                <li>
+                <li class="post-home">
                     <h1><a href="<?php print $link ?>"><?php print_r($array->title->$lang);?></a></h1>
                     <p><?php print date("d/m/Y", $array->date);?></p>
                     <p><?php print truncateWords($array->description->$lang, $numwords, '...');?></p>
