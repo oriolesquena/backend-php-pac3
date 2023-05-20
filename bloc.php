@@ -37,10 +37,10 @@
     ?>
     <nav>
         <ul class="primary-menu">
-            <li><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></li>
+            <li><strong><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></strong></li>
             <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
             <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->login->$lang);?></a></li>
+            <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
             <li><a href=""><?php print_r($menu->profile->$lang);?></a></li>
             <li><a href=""><?php print_r($menu->logout->$lang);?></a></li>
         </ul>
