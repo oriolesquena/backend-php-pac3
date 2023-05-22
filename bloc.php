@@ -28,21 +28,41 @@
     } else {
         $lang = 'ca'; // Idioma per defecte
     }
+
+    if (isset($_SESSION["login"])) {
+        $login = $_SESSION["login"];
+    } else {
+        $login = false;
+    }
+
+    $_SESSION["error"] = false;
+
     $order = 'desc';
     $sort = 'date';
     $arrayPosts = array();
 
     $jsonMenu = file_get_contents('./menu.json');
     $menu = json_decode($jsonMenu);
+
+    $jsonUsers = file_get_contents('./users.json');
+    $users = json_decode($jsonUsers);
     ?>
     <nav>
         <ul class="primary-menu">
             <li><strong><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></strong></li>
             <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
             <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
-            <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->profile->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->logout->$lang);?></a></li>
+            <?php if ($login == false) {
+                ?>
+                <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
+                <?php
+            } else if ($login == true) {
+                ?>
+                <li><a href="perfil.php"><?php print_r($menu->profile->$lang);?></a></li>
+                <li><a href="logout.php"><?php print_r($menu->logout->$lang);?></a></li>
+                <?php
+            }
+            ?>
         </ul>
         <ul class="lang-selector">
             <li class="language"><a href="?lang=ca"><img class="flag" src="./img/ca.png" alt="Català"></a></li>
@@ -50,7 +70,19 @@
         </ul>
     </nav>
     <main>
-
+        <div class="hello-usr">
+            <p>
+            <?php
+                if ($login) {
+                    if ($lang=='ca') {
+                        print ">> Hola, " . $users->username;
+                    } else {
+                        print ">> Hello, " . $users->username;
+                    }
+                } 
+                ?>
+            </p>
+        </div>
         <div class="order">
             <?php if ($lang == 'ca') {
                 ?>

@@ -34,38 +34,73 @@
     $lang = 'ca';
   }
 
+  if (isset($_SESSION["login"])) {
+    $login = $_SESSION["login"];
+  } else {
+    $login = false;
+  }
+
+  $_SESSION["error"] = false;
+
   $jsonMenu = file_get_contents('./menu.json');
   $menu = json_decode($jsonMenu);
+
+  $jsonUsers = file_get_contents('./users.json');
+  $users = json_decode($jsonUsers);
   ?>
   <nav>
       <ul class="primary-menu">
           <li><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></li>
           <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
           <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
-          <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
-          <li><a href=""><?php print_r($menu->profile->$lang);?></a></li>
-          <li><a href=""><?php print_r($menu->logout->$lang);?></a></li>
+          <?php if ($login == false) {
+            ?>
+            <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
+            <?php
+          } else if ($login == true) {
+            ?>
+            <li><a href="perfil.php"><?php print_r($menu->profile->$lang);?></a></li>
+            <li><a href="logout.php"><?php print_r($menu->logout->$lang);?></a></li>
+          <?php
+          }
+          ?>
       </ul>
       <ul class="lang-selector">
           <li class="language"><a href="?lang=ca"><img class="flag" src="./img/ca.png" alt="Català"></a></li>
           <li class="language"><a href="?lang=en"><img class="flag" src="./img/en.png" alt="Anglès"></a></li>
       </ul>
   </nav>
-  <?php
 
-  $jsonData = file_get_contents('./posts/post_' . $id . '.json');
-  $data = json_decode($jsonData);
-  ?>
-  <ul>
-      <li>
-          <h1><?php print_r($data->title->$lang);?></h1>
-          <p><?php print date("d/m/Y", $data->date);?></p>
-          <p><?php print_r($data->description->$lang);?></p>
-          <img class="post" src="<?php print_r($data->image);?>">
-      </li>
-  </ul><?php
+  <main>
+    <div class="hello-usr">
+      <p>
+        <?php
+          if ($login) {
+            if ($lang=='ca') {
+              print ">> Hola, " . $users->username;
+            } else {
+              print ">> Hello, " . $users->username;
+            }
+          } 
+        ?>
+      </p>
+    </div>
+    <?php
 
-  ?>
+    $jsonData = file_get_contents('./posts/post_' . $id . '.json');
+    $data = json_decode($jsonData);
+    ?>
+    <ul>
+        <li>
+            <h1><?php print_r($data->title->$lang);?></h1>
+            <p><?php print date("d/m/Y", $data->date);?></p>
+            <p><?php print_r($data->description->$lang);?></p>
+            <img class="post" src="<?php print_r($data->image);?>">
+        </li>
+    </ul><?php
+
+    ?>
+  </main>
 
 </body>
 </html>

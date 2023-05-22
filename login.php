@@ -18,8 +18,6 @@
     session_start(); // Necessari per poder utilitzar la funció isset() més avall
 
     // Declarar variables
-    $id = 0;
-    $numwords = 120;
     if (isset($_GET["lang"])) {
         $lang = $_GET["lang"];
         $_SESSION["lang"] = $lang;
@@ -28,9 +26,12 @@
     } else {
         $lang = 'ca'; // Idioma per defecte
     }
-    $order = 'desc';
-    $sort = 'date';
-    $arrayPosts = array();
+
+    if (isset($_SESSION["error"])) {
+        $error = $_SESSION["error"];
+    } else {
+        $error = false;
+    }
 
     $jsonMenu = file_get_contents('./menu.json');
     $menu = json_decode($jsonMenu);
@@ -41,8 +42,6 @@
             <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
             <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
             <li><strong><a href="login.php"><?php print_r($menu->login->$lang);?></a></strong></li>
-            <li><a href=""><?php print_r($menu->profile->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->logout->$lang);?></a></li>
         </ul>
         <ul class="lang-selector">
             <li class="language"><a href="?lang=ca"><img class="flag" src="./img/ca.png" alt="Català"></a></li>
@@ -50,7 +49,29 @@
         </ul>
     </nav>
     <main>
-        <form action="handleForm" method="get">
+    <?php
+        function handleForm() {
+            $jsonUsers = file_get_contents('./users.json');
+            $users = json_decode($jsonUsers);
+
+            if (isset( $_POST['submit'])) { 
+                $username = $_POST['username']; 
+                $password = $_POST['password']; 
+            }
+            if ($username == $users->username && password_verify($password, $users->password)) {
+                $_SESSION['login'] = true;
+                $_SESSION['error'] = false;
+                header("Location: ./bloc.php");
+                exit();
+            } else {
+                $_SESSION['error'] = true;
+                header("Location: ./login.php");
+                exit();
+            }
+        }
+        ?>
+
+        <form action="login.php" method="post">
             <div>
                 <label for="usr">
                 <span><?php if ($lang=='ca') {
@@ -84,9 +105,20 @@
                     type="password"
                     id="pwd"
                     name="password"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    pattern="[a-zA-Z &#39;-]{8,64}"
                     required
                 />
+            </div>
+            <div class="error-msg">
+                <p><?php if ($error) {
+                    if ($lang=='ca') {
+                        print "Usuari i/o contrasenya incorrectes";
+                    } else {
+                        print "Wrong user and/or password";
+                    }
+                }
+                ?>
+                </p>
             </div>
             <div class="button">
                 <button type="submit" name="submit"><?php if ($lang=='ca') {
@@ -98,20 +130,13 @@
             </div>
         </form>
 
-        <?php 
-        function handleForm() {
-            $jsonUsers = file_get_contents('./users.json');
-            $users = json_decode($jsonUsers);
-
-            if (isset( $_GET['submit'])) { 
-                $username = $_GET['username']; 
-                $password = $_GET['password']; 
-            }
-            if ($username == $users->username && $password == $users->password) {
-                $login = $_SESSION['login'];
-            }
-        }
+        <?php
+        if (isset($_POST['submit']))
+            {
+            handleForm();
+            } 
         ?>
+
     </main>
 
 </body>

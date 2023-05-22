@@ -31,6 +31,10 @@ body {
     margin-bottom: 0.5rem;
   }
 
+  ul {
+    padding-left: 0;
+  }
+
   li {
     list-style-type: none;
   }
@@ -61,9 +65,9 @@ body {
     margin: auto;
   }
 
-  .order {
+  /* .order {
     padding-left: 40px;
-  }
+  } */
 
   a {
     text-decoration: none;
@@ -90,6 +94,10 @@ body {
   hr:last-of-type {
     display: none;
   }
+
+  /* .hello-usr {
+    padding-left: 40px;
+  } */
 
   form {
     margin: 20vh auto;
@@ -134,4 +142,16 @@ button {
   background-color: rgb(68, 92, 3);
   border: 0;
   border-radius: 0.2rem;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: white;
+  color: rgb(68, 92, 3);
+  border: 2px solid rgb(68, 92, 3);
+}
+
+.error-msg {
+  color: red;
 }
