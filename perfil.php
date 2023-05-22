@@ -43,7 +43,7 @@
         <ul class="primary-menu">
             <li><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></li>
             <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
+            <li><a href="./api/noticies/en"><?php print_r($menu->api->$lang);?></a></li>
             <?php if ($login == false) {
                 ?>
                 <li><a href="login.php"><?php print_r($menu->login->$lang);?></a></li>
@@ -72,9 +72,9 @@
                 ?>
             </li>
             <li><?php if ($lang=='ca') {
-                    print "Contrasenya: ********";
+                    print "Contrasenya: " . $users->password;
                 } else {
-                    print "Password: ********";
+                    print "Password: " . $users->password;
                 }
                 ?>
             </li>

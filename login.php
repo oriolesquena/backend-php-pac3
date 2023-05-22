@@ -40,7 +40,7 @@
         <ul class="primary-menu">
             <li><a href="bloc.php"><?php print_r($menu->home->$lang);?></a></li>
             <li><a href="activitat_1.php"><?php print_r($menu->act1->$lang);?></a></li>
-            <li><a href=""><?php print_r($menu->api->$lang);?></a></li>
+            <li><a href="./api/noticies/en"><?php print_r($menu->api->$lang);?></a></li>
             <li><strong><a href="login.php"><?php print_r($menu->login->$lang);?></a></strong></li>
         </ul>
         <ul class="lang-selector">

@@ -5,7 +5,7 @@ foreach($files as $file) {
     if (substr($file, 0, 1) != '.') {
         $jsonData = file_get_contents('../../../posts/' . $file);
         $data = json_decode($jsonData);
-        $arrayPosts[] = array("title" => $data->title->ca, "description" => $data->description->ca, "date" => $data->date, "image" => $data->image);
+        $arrayPosts[] = array("title" => $data->title->en, "description" => $data->description->en, "date" => $data->date, "image" => $data->image);
     }
 }
 
