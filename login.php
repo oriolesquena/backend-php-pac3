@@ -54,10 +54,8 @@
             $jsonUsers = file_get_contents('./users.json');
             $users = json_decode($jsonUsers);
 
-            if (isset( $_POST['submit'])) { 
-                $username = $_POST['username']; 
-                $password = $_POST['password']; 
-            }
+            $username = $_POST['username']; 
+            $password = $_POST['password']; 
             if ($username == $users->username && password_verify($password, $users->password)) {
                 $_SESSION['login'] = true;
                 $_SESSION['error'] = false;
@@ -69,7 +67,7 @@
                 exit();
             }
         }
-        ?>
+    ?>
 
         <form action="login.php" method="post">
             <div>

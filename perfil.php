@@ -72,9 +72,9 @@
                 ?>
             </li>
             <li><?php if ($lang=='ca') {
-                    print "Contrasenya: " . $users->password;
+                    print "Contrasenya: ********";
                 } else {
-                    print "Password: " . $users->password;
+                    print "Password: ********";
                 }
                 ?>
             </li>
