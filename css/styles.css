@@ -48,8 +48,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
+    gap: 40px;
+    justify-content: start;
     width: 60%;
     text-transform: uppercase;
   }
